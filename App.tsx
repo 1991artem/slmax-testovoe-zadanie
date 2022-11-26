@@ -1,20 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground } from 'react-native';
+import Header from './src/header/Header';
+import TodosApp from './src/TodosApp/TodosApp';
 
 export default function App() {
+  const [theme, setTheme] = useState(true)
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <ImageBackground style={{width: '100%', height: '100%', flex: 1, backgroundColor: theme ? 'white':'black'}}>
+      <Header setTheme={setTheme}/>
+      <TodosApp />
+    </ImageBackground>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  )
+}
