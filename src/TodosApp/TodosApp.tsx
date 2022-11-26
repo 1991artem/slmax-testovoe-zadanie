@@ -49,9 +49,6 @@ export default function TodosApp() {
         renderItem={({item}) => {
           return <Task task={item} delete={() => handleDeleteTodo(item.key)} />;
         }}
-        ItemSeparatorComponent={() => {
-          return <View style={{backgroundColor: 'green'}}></View>;
-        }}
       />
       <View style={stylesApp.textInputContainer}>
         <TextInput

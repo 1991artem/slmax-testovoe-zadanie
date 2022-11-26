@@ -86,7 +86,15 @@ const stylesTask = StyleSheet.create({
       width: '100%',
       position: 'absolute',
       marginTop: 15
-  }
+  },
+  deleteBox: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#000000',
+    width: 100,
+    height: 80,
+},
 })
 
 export  {
