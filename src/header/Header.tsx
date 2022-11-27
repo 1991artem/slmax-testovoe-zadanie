@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Switch, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import SwitchWithIcons from "react-native-switch-with-icons";
+import { stylesHeader } from "../style";
 
 interface IHeader {
   setTheme: (value: boolean)=>void;
@@ -11,7 +12,7 @@ function Header({setTheme}: IHeader) {
   const [darkMode, setDarkMode] = useState(false);
 
   const toggleSwitch = () => {
-    setTheme(darkMode)
+    setTheme(!darkMode)
     setDarkMode((prev) => !prev)
   };
 
@@ -37,15 +38,15 @@ function Header({setTheme}: IHeader) {
         onValueChange={toggleSwitch}
         icon={ 
           {
-          true: require('../img/Ellipse.png'), 
-          false: require('../img/Vector.png')
+          false: require('../img/Ellipse.png'), 
+          true: require('../img/Vector.png')
         } 
         }
         trackColor={
           {true: "#362693", false: "#10637D"}
         }
         thumbColor={
-          {true: "#FFFFFF", false: "#FFFFFF"}
+          {true: "#AAFFFF", false: "#AAFFFF"}
         }
         />
       </View>
@@ -54,22 +55,3 @@ function Header({setTheme}: IHeader) {
 }
 
 export default Header;
-
-const stylesHeader = StyleSheet.create({
-  container: {
-    display: "flex",
-    alignItems: "flex-end",
-  },
-  toggle: {
-    marginTop: 20,
-    marginRight: 20,
-    width: 60,
-    height: 25,
-  },
-  switch: {
-    width: 60,
-    height: 25,
-  },
-});
-
-const SwitchOn = require('../img/Vector.png');

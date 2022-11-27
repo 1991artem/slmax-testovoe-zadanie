@@ -4,11 +4,11 @@ import Header from './src/header/Header';
 import TodosApp from './src/TodosApp/TodosApp';
 
 export default function App() {
-  const [theme, setTheme] = useState(true)
+  const [dark, setDark] = useState(false)
   return (
-    <ImageBackground style={{width: '100%', height: '100%', flex: 1, backgroundColor: theme ? 'white':'black'}}>
-      <Header setTheme={setTheme}/>
-      <TodosApp />
+    <ImageBackground style={{width: '100%', height: '100%', flex: 1, backgroundColor: !dark ? 'white':'black'}}>
+      <Header setTheme={setDark}/>
+      <TodosApp dark={dark}/>
     </ImageBackground>
 
   )
