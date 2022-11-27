@@ -60,6 +60,7 @@ export interface IHeader {
 export interface IFilter {
   dark: boolean;
   setFilter: (value: ITodosFilter)=>void;
+  setShowFilter: (value: boolean)=>void;
 }
 
 export interface ITodosApp {

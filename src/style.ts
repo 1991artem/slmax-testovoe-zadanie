@@ -172,6 +172,9 @@ const darkMode = StyleSheet.create({
   },
   background: {
     backgroundColor: '#362693'
+  },
+  backgroundBlack: {
+    backgroundColor: 'black',
   }
 })
 
@@ -225,11 +228,38 @@ const stylesComments = StyleSheet.create({
   }
 })
 
+const styleFilter = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '30%',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF'
+  },
+  row: {
+    width: '60%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10
+  },
+  text: {
+    color: '#000000'
+  },
+  button: {
+    backgroundColor: '#82C8DE',
+  }
+});
+
 export  {
   stylesHeader,
   stylesApp,
   stylesTask,
   stylesComments,
   baseColor,
+  styleFilter,
   darkMode
 };

@@ -54,7 +54,7 @@ function Header({setTheme, setFilter}: IHeader) {
         />
       </View>
       {
-        showFilter ? <FilterInput dark={darkMode} setFilter={setFilter}/> : null
+        showFilter ? <FilterInput dark={darkMode} setFilter={setFilter} setShowFilter={setShowFilter}/> : null
       }
     </View>
   );

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Button } from 'react-native-paper';
-import { baseColor, darkMode } from "../style";
+import { darkMode, styleFilter } from "../style";
 import useAlert from "../hooks/alert.hook";
 import { IFilter } from "../interfaces";
 
-function FilterInput({dark, setFilter}: IFilter) {
+function FilterInput({dark, setFilter, setShowFilter}: IFilter) {
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
 
@@ -33,24 +33,27 @@ function FilterInput({dark, setFilter}: IFilter) {
         startDate,
         endDate,
       })
+      setShowFilter(false)
     }
 
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <Text style={styles.text}>Начало: </Text>
+    <View style={!dark ? styleFilter.container : {...styleFilter.container, ...darkMode.backgroundBlack}}>
+      <View style={styleFilter.row}>
+        <Text style={!dark ? styleFilter.text : {...styleFilter.text, ...darkMode.color}}>Начало: </Text>
         <RNDateTimePicker 
         display="compact"
+        themeVariant={dark ?"dark": "light"}
         value={startDate} 
         onChange={getStartDate}
         />
       </View>
-      <View style={styles.row}>
-        <Text style={styles.text}>Конец: </Text>
+      <View style={styleFilter.row}>
+        <Text style={!dark ? styleFilter.text : {...styleFilter.text, ...darkMode.color}}>Конец: </Text>
         <RNDateTimePicker 
         display="compact"
+        themeVariant={dark ?"dark": "light"}
         value={endDate} 
         onChange={getEndDate}
         />
@@ -59,7 +62,7 @@ function FilterInput({dark, setFilter}: IFilter) {
       icon="camera" 
       mode="contained" 
       onPress={onPress}
-      style={!dark ? styles.button : {...styles.button, ...darkMode.background}}
+      style={!dark ? styleFilter.button : {...styleFilter.button, ...darkMode.background}}
       >
         Filter
       </Button>
@@ -68,29 +71,3 @@ function FilterInput({dark, setFilter}: IFilter) {
 }
 
 export default FilterInput;
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '30%',
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFFF'
-  },
-  row: {
-    width: '60%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 10
-  },
-  text: {
-    color: baseColor.color.color
-  },
-  button: {
-    backgroundColor: '#82C8DE',
-  }
-});
