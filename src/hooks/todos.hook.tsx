@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ITodo, IComment } from "../interfaces"
+import { ITodo, IComment } from '../interfaces';
 
 function useTodos() {
   const [todos, setTodos] = useState([] as ITodo[])

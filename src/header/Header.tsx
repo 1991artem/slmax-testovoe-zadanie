@@ -1,15 +1,15 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import SwitchWithIcons from "react-native-switch-with-icons";
+import { IHeader } from "../interfaces";
 import { stylesHeader } from "../style";
+import FilterInput from './FilterInput';
 
-interface IHeader {
-  setTheme: (value: boolean)=>void;
-}
-
-function Header({setTheme}: IHeader) {
+function Header({setTheme, setFilter}: IHeader) {
   const [darkMode, setDarkMode] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
 
   const toggleSwitch = () => {
     setTheme(!darkMode)
@@ -32,7 +32,10 @@ function Header({setTheme}: IHeader) {
           fill="white"
         />
       </Svg>
-      <View style={stylesHeader.toggle}>
+      <View style={stylesHeader.toolBar}>
+      <TouchableOpacity onPress={()=> setShowFilter(prev => !prev)}>
+        <MaterialIcons name="filter-list" size={24} color={darkMode ? "#7363D1" : "#10637D"} />
+      </TouchableOpacity>
         <SwitchWithIcons 
         value={darkMode} 
         onValueChange={toggleSwitch}
@@ -50,6 +53,9 @@ function Header({setTheme}: IHeader) {
         }
         />
       </View>
+      {
+        showFilter ? <FilterInput dark={darkMode} setFilter={setFilter}/> : null
+      }
     </View>
   );
 }

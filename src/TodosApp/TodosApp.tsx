@@ -1,7 +1,7 @@
-import React, { createContext, useState } from 'react';
-import { TextInput, TouchableOpacity, View, FlatList, SafeAreaView, Alert } from 'react-native';
+import React, { createContext, useState, useMemo } from 'react';
+import { TextInput, TouchableOpacity, View, FlatList, SafeAreaView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { IContext} from '../interfaces';
+import { IContext, ITodosApp, ITodo, ITodosFilter } from '../interfaces';
 import { baseColor, darkMode, stylesApp } from '../style';
 import Task from '../Task/Task';
 import useAlert from '../hooks/alert.hook';
@@ -9,7 +9,7 @@ import useTodos from '../hooks/todos.hook';
 
 export const AppContext = createContext({} as IContext);
 
-export default function TodosApp({dark}:{dark: boolean}) {
+export default function TodosApp({dark, filter}:ITodosApp) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
@@ -22,6 +22,21 @@ export default function TodosApp({dark}:{dark: boolean}) {
     addCommentToTodo,
     handleDeleteTodo
   } = useTodos()
+
+  const filterTodosArray = (params: ITodosFilter, todos: ITodo[]) => {
+    const start = new Date(params.startDate).toLocaleDateString();
+    const end = new Date(params.endDate).toLocaleDateString();
+    if(params.startDate && params.endDate){
+      return todos.filter((todo: ITodo) => {
+          const formatDate = new Date(todo.createdAt).toLocaleDateString()
+          if (formatDate >= start && formatDate <= end) return true
+        })
+    } else {
+      return todos;
+    }
+  }
+
+  const todosAfterFilter = useMemo(()=>filterTodosArray(filter, todos),[filter, title])
 
   const titleSize = 25;
 
@@ -61,7 +76,7 @@ export default function TodosApp({dark}:{dark: boolean}) {
     <AppContext.Provider value={todosContext}>
       <SafeAreaView style={stylesApp.container}>
         <FlatList
-          data={todos}
+          data={todosAfterFilter}
           renderItem={({item}) => {
             return <Task task={item} />;
           }}

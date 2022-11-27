@@ -35,6 +35,7 @@ const stylesApp = StyleSheet.create({
     borderColor: '#000000',
     width: '95%', 
     height: '20%',
+    minHeight: 100,
     paddingLeft: 15,
     paddingTop: 10,
     marginBottom: 40,
@@ -144,10 +145,13 @@ const stylesHeader = StyleSheet.create({
     display: "flex",
     alignItems: "flex-end",
   },
-  toggle: {
+  toolBar: {
+    display: "flex",
+    flexDirection: 'row',
+    justifyContent: "space-between",
     marginTop: 20,
     marginRight: 20,
-    width: 60,
+    width: '90%',
     height: 25,
   },
   switch: {
@@ -165,6 +169,9 @@ const darkMode = StyleSheet.create({
   },
   borderBottomColor: {
     borderBottomColor: '#FFFFFF'
+  },
+  background: {
+    backgroundColor: '#362693'
   }
 })
 

@@ -46,3 +46,23 @@ export interface ICommentProps {
 export interface IInput {
   function: (value: string) =>void;
 }
+
+export interface ITodosFilter {
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface IHeader {
+  setTheme: (value: boolean)=>void;
+  setFilter: (value: ITodosFilter)=>void;
+}
+
+export interface IFilter {
+  dark: boolean;
+  setFilter: (value: ITodosFilter)=>void;
+}
+
+export interface ITodosApp {
+  dark: boolean;
+  filter: ITodosFilter;
+}
