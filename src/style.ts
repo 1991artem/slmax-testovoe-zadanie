@@ -180,10 +180,49 @@ const baseColor = StyleSheet.create({
   }
 })
 
+const stylesComments = StyleSheet.create({
+  commentWrapper: {
+      padding: 5,
+      marginTop: 10,
+      flexDirection: 'column',
+      borderColor: 'red',
+      width: '60%',
+      justifyContent: 'space-between',
+      borderWidth: 1,
+      borderTopLeftRadius: 5,
+      borderTopRightRadius: 5,
+      borderBottomLeftRadius: 5,
+      borderBottomRightRadius: 5,
+  },
+  text: {
+    fontSize: 8,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+  answer: {
+    marginLeft: 'auto',
+    borderColor: 'green',
+  },
+  input: {
+    display: 'flex',
+    flexDirection: 'row',
+    fontStyle: 'normal',
+    color: '#000000',
+    padding: 5,
+    width: '95%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
+    marginBottom: 10,
+  }
+})
+
 export  {
   stylesHeader,
   stylesApp,
   stylesTask,
+  stylesComments,
   baseColor,
   darkMode
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Switch, View } from "react-native";
+import { View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import SwitchWithIcons from "react-native-switch-with-icons";
 import { stylesHeader } from "../style";
@@ -46,7 +46,7 @@ function Header({setTheme}: IHeader) {
           {true: "#362693", false: "#10637D"}
         }
         thumbColor={
-          {true: "#AAFFFF", false: "#AAFFFF"}
+          {true: "#7363D1", false: "#82C8DE"}
         }
         />
       </View>
