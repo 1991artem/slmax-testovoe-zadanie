@@ -69,6 +69,10 @@ function Comments({comment, id}: ICommentProps) {
       : null
 
     }
+          <Text onPress={()=>setShowAnswers(prev => !prev)}
+          style={!dark ? stylesTask.subInfoText : {...stylesTask.subInfoText, ...darkMode.color}}>
+          &#8212; Показать все ответы
+        </Text>
     </>
 
     );

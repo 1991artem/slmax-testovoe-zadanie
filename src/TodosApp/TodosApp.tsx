@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { TextInput, TouchableOpacity, View, FlatList, SafeAreaView, Keyboard, TouchableWithoutFeedback, NativeSyntheticEvent, TextInputChangeEventData, TextInputFocusEventData, TextInputSelectionChangeEventData, TextInputSubmitEditingEventData, KeyboardAvoidingView, Platform } from 'react-native';
+import { TextInput, TouchableOpacity, View, FlatList, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ITodosApp } from '../interfaces';
 import { baseColor, darkMode, stylesApp } from '../style';
@@ -14,7 +14,7 @@ export default function TodosApp({ dark, setTodos, todos, setTheme, setFilter }:
   const [description, setDescription] = useState('');
   const {setKeyboardAvoidingView, closeKeyboard} = useCloseKeyboard(false);
 
-  const {subInputIsActive, setSubInputIsActive} = useContext(AppContext)
+  const {subInputIsActive} = useContext(AppContext)
 
   const handleAddTodo = () => {
     if (title.length > 0) {
@@ -25,9 +25,9 @@ export default function TodosApp({ dark, setTodos, todos, setTheme, setFilter }:
         createdAt: new Date(),
         comments: []
       }])
-      closeKeyboard()
       setTitle('')
       setDescription('')
+      closeKeyboard()
     }
   }
 
@@ -41,27 +41,22 @@ export default function TodosApp({ dark, setTodos, todos, setTheme, setFilter }:
     }
   }
 
-  const touchableHandler = () => {
-    Keyboard.dismiss()
-    setSubInputIsActive(false)
-  }
 
   return (
-    <TouchableWithoutFeedback onPress={touchableHandler}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        enabled={true}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <Header setTheme={setTheme} setFilter={setFilter} />
-        <SafeAreaView style={stylesApp.container}>
-          <FlatList
-            data={todos}
-            renderItem={({ item }) => {
-              return <Task task={item}/>;
-            }}
-            keyExtractor={item => item.key.toString()}
-          />
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    enabled={true}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+  >
+      <Header setTheme={setTheme} setFilter={setFilter} />
+          <SafeAreaView style={stylesApp.container}>
+            <FlatList
+              data={todos}
+              renderItem={({ item }) => {
+                return <Task task={item}/>;
+              }}
+              keyExtractor={item => item.key.toString()}
+            />
           {
             !subInputIsActive ?
           <View style={!dark ? stylesApp.textInputContainer : { ...stylesApp.textInputContainer, ...darkMode.border, ...darkMode.backgroundBlack }}>
@@ -91,10 +86,8 @@ export default function TodosApp({ dark, setTodos, todos, setTheme, setFilter }:
           </View>
           : null
           }
-
-        </SafeAreaView>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+          </SafeAreaView>
+          </KeyboardAvoidingView>
   )
 }
 

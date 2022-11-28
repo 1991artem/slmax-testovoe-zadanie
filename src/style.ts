@@ -3,9 +3,11 @@ import { StyleSheet } from "react-native";
 const stylesApp = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  scroll: {
+    height: '80%',
   },
   inputDescriptionContainer: {
     flexDirection: 'row',
@@ -34,9 +36,10 @@ const stylesApp = StyleSheet.create({
     flexDirection: 'column',
     borderColor: '#000000',
     backgroundColor: '#FFFFFF',
-    width: '95%', 
-    height: '20%',
-    minHeight: 100,
+    width: '95%',
+    maxWidth: 333, 
+    height: '9.6%',
+    minHeight: 82,
     paddingLeft: 15,
     paddingTop: 10,
     marginBottom: 40,
@@ -57,6 +60,7 @@ const stylesTask = StyleSheet.create({
       flexDirection: 'row',
       borderColor: '#000000',
       width: '97%',
+      maxWidth: 333, 
       height: 37,
       justifyContent: 'space-between',
       borderWidth: 1,
@@ -78,7 +82,8 @@ const stylesTask = StyleSheet.create({
     marginLeft: 16,
   },
   description: {
-    width: '60%', 
+    width: '60%',
+    maxWidth: 333,  
     height: '90%', 
     marginLeft: 6,
     justifyContent: 'center',
@@ -113,6 +118,7 @@ const stylesTask = StyleSheet.create({
   },
   descriptionkWrapper: {
     padding: 5,
+    maxWidth: 333, 
     width: '95%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -124,18 +130,21 @@ const stylesTask = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 4
+    marginTop: 10
   },
   subTitle: {
-    color: '#000000',
-    fontWeight: 'bold'
+    marginTop: 10,
+    marginBottom: 10,
+    fontSize: 10,
+    color: '#8F8F8F',
+    marginLeft: 'auto',
   },
   subInfoText: {
-    fontSize: 8,
-    color: '#000000'
+    fontSize: 10,
+    color: '#8F8F8F'
   },
   mainDescription: {
-    fontSize: 12,
+    fontSize: 10,
     color: '#000000'
   }
 })
@@ -143,15 +152,18 @@ const stylesTask = StyleSheet.create({
 const stylesHeader = StyleSheet.create({
   container: {
     marginBottom: 10,
+    width: '100%',
     display: "flex",
-    alignItems: "flex-end",
+
   },
   toolBar: {
     display: "flex",
     flexDirection: 'row',
     justifyContent: "space-between",
+    alignItems: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     marginTop: 20,
-    marginRight: 20,
     width: '90%',
     height: 25,
   },
@@ -159,6 +171,21 @@ const stylesHeader = StyleSheet.create({
     width: 60,
     height: 25,
   },
+  filterText: {
+    fontSize: 10,
+    color: '#8F8F8F',
+    marginLeft: 5
+  },
+  toolBarFilter: {
+    display: "flex",
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    alignItems: 'center',
+    width: 180,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
+    height: 30,
+  }
 });
 
 const darkMode = StyleSheet.create({
@@ -196,8 +223,8 @@ const stylesComments = StyleSheet.create({
       padding: 5,
       marginTop: 10,
       flexDirection: 'column',
-      borderColor: 'red',
-      width: '60%',
+      borderColor: '#000000',
+      maxWidth: 333, 
       justifyContent: 'space-between',
       borderWidth: 1,
       borderTopLeftRadius: 5,
@@ -211,8 +238,7 @@ const stylesComments = StyleSheet.create({
     color: '#000000',
   },
   answer: {
-    marginLeft: 'auto',
-    borderColor: 'green',
+    borderWidth: 0,
   },
   input: {
     display: 'flex',
@@ -220,13 +246,22 @@ const stylesComments = StyleSheet.create({
     fontStyle: 'normal',
     color: '#000000',
     padding: 5,
+    maxWidth: 333, 
+    height: 40,
     width: '95%',
+    alignItems: 'center',
     marginLeft: 'auto',
     marginRight: 'auto',
     borderBottomWidth: 1,
     borderBottomColor: '#000000',
     marginBottom: 10,
-  }
+  },
+  commentTitle: {
+    marginTop: 10,
+    marginBottom: 10,
+    fontSize: 10,
+    color: '#000000'
+  },
 })
 
 const styleFilter = StyleSheet.create({
@@ -237,7 +272,8 @@ const styleFilter = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    marginTop: 15
   },
   row: {
     width: '60%',

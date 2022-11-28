@@ -1,5 +1,5 @@
 import React, { createContext, useMemo, useState } from 'react';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import useTodos from './src/hooks/todos.hook';
 import { IContext, ITodo, ITodosFilter } from './src/interfaces';
 import TodosApp from './src/TodosApp/TodosApp';
@@ -44,6 +44,11 @@ export default function App() {
 
   const todosAfterFilter = useMemo(()=>filterTodosArray(filter, todos),[filter, todos])
 
+  const touchableHandler = () => {
+    Keyboard.dismiss()
+    setSubInputIsActive(false)
+  }
+
   const todosContext: IContext = {
     deleteTask: handleDeleteTodo,
     addComment: addCommentToTodo,
@@ -51,12 +56,14 @@ export default function App() {
     removeComment: removeCommentFromTodo,
     removeAnswer: removeAnswerFromTodo,
     dark: dark,
+    filter: filter,
     subInputIsActive, 
     setSubInputIsActive
   }
 
   return (
     <AppContext.Provider value={todosContext}>
+      <TouchableWithoutFeedback onPress={touchableHandler}>
       <ImageBackground style={{width: '100%', height: '100%', flex: 1, backgroundColor: !dark ? 'white':'black'}}>
         <TodosApp 
         dark={dark} 
@@ -65,7 +72,9 @@ export default function App() {
         setTheme={setDark} 
         setFilter={setFilter}
         />
+
       </ImageBackground>
+      </TouchableWithoutFeedback>
     </AppContext.Provider>
   )
 }

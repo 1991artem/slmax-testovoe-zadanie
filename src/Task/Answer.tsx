@@ -10,6 +10,7 @@ function Answer({comment, id}: ICommentProps) {
 
   return ( 
       <View style={!comment.isAnswer ? stylesComments.commentWrapper : {...stylesComments.commentWrapper, ...stylesComments.answer}}>
+        <Text style={!dark ? stylesComments.commentTitle : {...stylesComments.commentTitle, ...darkMode.color}}>Ответ на комментарий - {comment.answerCommentId}</Text>
         <Text style={!dark ? stylesComments.text : {...stylesComments.text, ...darkMode.color}}>{comment.text}</Text>
         <View style={stylesTask.subInfo}>
         <Text style={!dark ? stylesTask.subInfoText : {...stylesTask.subInfoText, ...darkMode.color}}>{comment.createdAt.toUTCString()}</Text>

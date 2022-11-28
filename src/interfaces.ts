@@ -27,6 +27,7 @@ export interface IContext {
   removeComment: (id: number, commentId: number) => void;
   removeAnswer: (id: number, commentId: number, answerCommentId: number | undefined) => void;
   dark: boolean;
+  filter: ITodosFilter;
   subInputIsActive: boolean;
   setSubInputIsActive: (value: boolean) => void;
 }

@@ -30,21 +30,18 @@ function Description({props}: IDescriptionProps) {
   }
 
   return ( 
-    <>
-    <View style={!dark ? stylesTask.descriptionkWrapper : {...stylesTask.descriptionkWrapper, ...darkMode.borderBottomColor}}>
-      <Text style={!dark ? stylesTask.subTitle : {...stylesTask.subTitle, ...darkMode.color}}>{props.title}</Text>
+    <SafeAreaView style={!dark ? stylesTask.descriptionkWrapper : {...stylesTask.descriptionkWrapper, ...darkMode.borderBottomColor}}>
+      <Text style={!dark ? stylesTask.subTitle : {...stylesTask.subTitle, ...darkMode.color}}>{props.createdAt.toLocaleDateString()}</Text>
       <Text style={!dark ? stylesTask.mainDescription : {...stylesTask.mainDescription, ...darkMode.color}}>{props.description}</Text>
       <View style={stylesTask.subInfo}>
-        <Text style={!dark ? stylesTask.subInfoText : {...stylesTask.subInfoText, ...darkMode.color}}>{props.createdAt.toUTCString()}</Text>
         <Text style={!dark ? stylesTask.subInfoText : {...stylesTask.subInfoText, ...darkMode.color}}>Comments: {props.comments.length}</Text>
         <TouchableOpacity onPress={()=> setShowComments(prev => !prev)}>
             <MaterialIcons name="add-comment" size={18} color={!dark ? baseColor.color.color : darkMode.color.color} />
         </TouchableOpacity>
       </View>
-    </View>
-    {
+      {
       showComments ?
-      <SafeAreaView>
+      <View>
         <Input func={addCommentToTodos} />
         <FlatList
           data={props.comments}
@@ -53,11 +50,9 @@ function Description({props}: IDescriptionProps) {
           }}
           keyExtractor={item => item.id.toString()}
         /> 
-      </SafeAreaView> : null
+      </View> : null
     }
-
-    </>
-
+    </SafeAreaView>
     );
 }
 
