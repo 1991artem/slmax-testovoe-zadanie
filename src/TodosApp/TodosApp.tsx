@@ -1,114 +1,100 @@
-import React, { createContext, useState, useMemo } from 'react';
-import { TextInput, TouchableOpacity, View, FlatList, SafeAreaView } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { TextInput, TouchableOpacity, View, FlatList, SafeAreaView, Keyboard, TouchableWithoutFeedback, NativeSyntheticEvent, TextInputChangeEventData, TextInputFocusEventData, TextInputSelectionChangeEventData, TextInputSubmitEditingEventData, KeyboardAvoidingView, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { IContext, ITodosApp, ITodo, ITodosFilter } from '../interfaces';
+import { ITodosApp } from '../interfaces';
 import { baseColor, darkMode, stylesApp } from '../style';
 import Task from '../Task/Task';
 import useAlert from '../hooks/alert.hook';
-import useTodos from '../hooks/todos.hook';
+import Header from '../header/Header';
+import useCloseKeyboard from '../hooks/closeKeyboard.hook';
+import { AppContext } from '../../App';
 
-export const AppContext = createContext({} as IContext);
-
-export default function TodosApp({dark, filter}:ITodosApp) {
+export default function TodosApp({ dark, setTodos, todos, setTheme, setFilter }: ITodosApp) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const {setKeyboardAvoidingView, closeKeyboard} = useCloseKeyboard(false);
 
-  const {
-    todos,
-    setTodos,
-    removeAnswerFromTodo,
-    removeCommentFromTodo,
-    addAnswerToTodo,
-    addCommentToTodo,
-    handleDeleteTodo
-  } = useTodos()
-
-  const filterTodosArray = (params: ITodosFilter, todos: ITodo[]) => {
-    const start = new Date(params.startDate).toLocaleDateString();
-    const end = new Date(params.endDate).toLocaleDateString();
-    if(params.startDate && params.endDate){
-      return todos.filter((todo: ITodo) => {
-          const formatDate = new Date(todo.createdAt).toLocaleDateString()
-          if (formatDate >= start && formatDate <= end) return true
-        })
-    } else {
-      return todos;
-    }
-  }
-
-  const todosAfterFilter = useMemo(()=>filterTodosArray(filter, todos),[filter, title])
-
-  const titleSize = 25;
+  const {subInputIsActive, setSubInputIsActive} = useContext(AppContext)
 
   const handleAddTodo = () => {
     if (title.length > 0) {
       setTodos([...todos, {
-        title: title,
+        title: title.trim(),
         key: Date.now(),
-        description: description,
+        description: description.trim(),
         createdAt: new Date(),
         comments: []
       }])
+      closeKeyboard()
       setTitle('')
       setDescription('')
     }
   }
 
   const checkTitleSize = (string: string) => {
-    if(string.length > 25){
+    const titleSize = 25;
+    if (string.length > titleSize) {
       const trimString = () => setTitle(string.substring(0, titleSize))
-      useAlert("Max title size is 20 characters", "Trim up to 25 characters?", trimString )
+      useAlert("Max title size is 20 characters", "Trim up to 25 characters?", trimString)
     } else {
       return setTitle(string);
     }
   }
 
-  const todosContext: IContext = {
-    deleteTask: handleDeleteTodo,
-    addComment: addCommentToTodo,
-    answer: addAnswerToTodo,
-    removeComment: removeCommentFromTodo,
-    removeAnswer: removeAnswerFromTodo,
-    dark: dark
+  const touchableHandler = () => {
+    Keyboard.dismiss()
+    setSubInputIsActive(false)
   }
 
   return (
-    <AppContext.Provider value={todosContext}>
-      <SafeAreaView style={stylesApp.container}>
-        <FlatList
-          data={todosAfterFilter}
-          renderItem={({item}) => {
-            return <Task task={item} />;
-          }}
-          keyExtractor={item => item.key.toString()}
-        />
-        <View style={{height: 5}}></View>
-        <View style={!dark ? stylesApp.textInputContainer : {...stylesApp.textInputContainer, ...darkMode.border}}>
-          <TextInput
-            style={!dark ? stylesApp.titleInput : {...stylesApp.titleInput, ...darkMode.borderBottomColor, ...darkMode.color}}
-            multiline={true}
-            onChangeText={(value) => checkTitleSize(value)}
-            placeholder={'Название'}
-            placeholderTextColor={!dark ? baseColor.color.color : darkMode.color.color}
-            value={title}
+    <TouchableWithoutFeedback onPress={touchableHandler}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        enabled={true}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Header setTheme={setTheme} setFilter={setFilter} />
+        <SafeAreaView style={stylesApp.container}>
+          <FlatList
+            data={todos}
+            renderItem={({ item }) => {
+              return <Task task={item}/>;
+            }}
+            keyExtractor={item => item.key.toString()}
           />
-          <View style={stylesApp.inputDescriptionContainer}>
+          {
+            !subInputIsActive ?
+          <View style={!dark ? stylesApp.textInputContainer : { ...stylesApp.textInputContainer, ...darkMode.border, ...darkMode.backgroundBlack }}>
             <TextInput
-              style={!dark ? stylesApp.descriptionInput : {...stylesApp.descriptionInput, ...darkMode.color}}
+              style={!dark ? stylesApp.titleInput : { ...stylesApp.titleInput, ...darkMode.borderBottomColor, ...darkMode.color }}
               multiline={true}
-              onChangeText={(value) => setDescription(value)}
-              placeholder={'Текст описание'}
+              onFocus={()=> setKeyboardAvoidingView(true)}
+              onChangeText={(value) => checkTitleSize(value)}
+              placeholder={'Название'}
               placeholderTextColor={!dark ? baseColor.color.color : darkMode.color.color}
-              value={description}
+              value={title}
             />
-            <TouchableOpacity onPress={() => handleAddTodo()}>
-              <MaterialIcons name="keyboard-arrow-right" size={24} color={!dark ? baseColor.color.color : darkMode.color.color} />
-            </TouchableOpacity>
+            <View style={stylesApp.inputDescriptionContainer}>
+              <TextInput
+                style={!dark ? stylesApp.descriptionInput : { ...stylesApp.descriptionInput, ...darkMode.color }}
+                multiline={true}
+                onFocus={()=> setKeyboardAvoidingView(true)}
+                onChangeText={(value) => setDescription(value)}
+                placeholder={'Текст описание'}
+                placeholderTextColor={!dark ? baseColor.color.color : darkMode.color.color}
+                value={description}
+              />
+              <TouchableOpacity onPress={() => handleAddTodo()}>
+                <MaterialIcons name="keyboard-arrow-right" size={24} color={!dark ? baseColor.color.color : darkMode.color.color} />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </SafeAreaView>
-    </AppContext.Provider>
-    
+          : null
+          }
+
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   )
 }
 

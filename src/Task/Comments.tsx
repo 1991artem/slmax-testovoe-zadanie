@@ -3,10 +3,10 @@ import React, { useContext, useState } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { baseColor, darkMode, stylesComments, stylesTask } from "../style";
 import { ICommentProps } from '../interfaces';
-import { AppContext } from "../TodosApp/TodosApp";
 import Input from "./Input";
 import Answer from "./Answer";
 import useAlert from "../hooks/alert.hook";
+import { AppContext } from "../../App";
 
 
 
@@ -54,14 +54,14 @@ function Comments({comment, id}: ICommentProps) {
         <FlatList
           data={showAnswers ? comment.answers : comment.answers.slice(  - 1)}
           renderItem={({item}) => {
-          return <Answer comment={item} id={id}/>;
+          return <Answer comment={item} id={id} />;
           }}
           keyExtractor={item => item.id.toString()}
         /> 
     {
       showInput ? 
       <>
-      <Input function={addAnswer}/> 
+      <Input func={addAnswer} /> 
       <Text style={!dark ? stylesTask.subInfoText : {...stylesTask.subInfoText, ...darkMode.color}}>
         Ответ на комментарий - {comment.id}
         </Text>

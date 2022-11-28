@@ -1,34 +1,41 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, TextInput, TouchableOpacity } from "react-native";
 import { stylesComments, darkMode, stylesApp, baseColor } from "../style";
-import { AppContext } from "../TodosApp/TodosApp";
 import { IInput } from '../interfaces';
+import { AppContext } from "../../App";
+import useCloseKeyboard from "../hooks/closeKeyboard.hook";
 
-function Input(props: IInput) {
-  const {dark} = useContext(AppContext)
+function Input({func}: IInput) {
+  const { dark } = useContext(AppContext)
   const [comment, setComment] = useState('');
+  const { closeKeyboard } = useCloseKeyboard(false);
+
+  const {setSubInputIsActive} = useContext(AppContext)
 
   const touchHandler = () => {
-    props.function(comment)
+    func(comment)
+    setSubInputIsActive(false)
+    closeKeyboard()
     setComment('')
   }
 
-  return ( 
-    <View style={!dark ? stylesComments.input : {...stylesComments.input, ...darkMode.border}}>
-    <TextInput
-      style={!dark ? stylesApp.descriptionInput : {...stylesApp.descriptionInput, ...darkMode.borderBottomColor, ...darkMode.color}}
-      multiline={true}
-      onChangeText={(value)=> setComment(value)}
-      placeholder={'Комментарий'}
-      placeholderTextColor={!dark ? baseColor.color.color : darkMode.color.color}
-      value={comment}
-    />
-    <TouchableOpacity onPress={touchHandler}>
-      <MaterialIcons name="add" size={24} color={!dark ? baseColor.color.color : darkMode.color.color} />
-    </TouchableOpacity>
-  </View>
-   );
+  return (
+    <SafeAreaView style={!dark ? stylesComments.input : { ...stylesComments.input, ...darkMode.border }}>
+      <TextInput
+        style={!dark ? stylesApp.descriptionInput : { ...stylesApp.descriptionInput, ...darkMode.borderBottomColor, ...darkMode.color }}
+        multiline={true}
+        onFocus={() => setSubInputIsActive(true)}
+        onChangeText={(value) => setComment(value)}
+        placeholder={'Комментарий'}
+        placeholderTextColor={!dark ? baseColor.color.color : darkMode.color.color}
+        value={comment}
+      />
+      <TouchableOpacity onPress={touchHandler}>
+        <MaterialIcons name="add" size={24} color={!dark ? baseColor.color.color : darkMode.color.color} />
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
 }
 
 export default Input;

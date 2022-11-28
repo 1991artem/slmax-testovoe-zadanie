@@ -1,9 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons"
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import { View, Text, TouchableOpacity } from "react-native"
+import { AppContext } from "../../App"
 import { ICommentProps } from "../interfaces"
 import { stylesComments, darkMode, stylesTask, baseColor } from "../style"
-import { AppContext } from "../TodosApp/TodosApp"
 
 function Answer({comment, id}: ICommentProps) {
   const {dark, removeAnswer} = useContext(AppContext)

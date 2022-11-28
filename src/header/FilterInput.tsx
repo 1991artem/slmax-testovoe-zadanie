@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text } from 'react-native';
 import { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import RNDateTimePicker from "@react-native-community/datetimepicker";
@@ -6,10 +6,13 @@ import { Button } from 'react-native-paper';
 import { darkMode, styleFilter } from "../style";
 import useAlert from "../hooks/alert.hook";
 import { IFilter } from "../interfaces";
+import { AppContext } from "../../App";
 
 function FilterInput({dark, setFilter, setShowFilter}: IFilter) {
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
+
+  const {setSubInputIsActive} = useContext(AppContext)
 
   const getStartDate = (event: DateTimePickerEvent, date?: Date) => {
     const {nativeEvent: {timestamp}} = event;
@@ -33,6 +36,7 @@ function FilterInput({dark, setFilter, setShowFilter}: IFilter) {
         startDate,
         endDate,
       })
+      setSubInputIsActive(false)
       setShowFilter(false)
     }
 

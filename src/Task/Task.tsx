@@ -5,7 +5,7 @@ import { baseColor, darkMode, stylesTask } from "../style";
 import { IDelete, ITask } from '../interfaces';
 import { MaterialIcons } from "@expo/vector-icons";
 import Description from "./Description";
-import { AppContext } from "../TodosApp/TodosApp";
+import { AppContext } from "../../App";
 
 
 function Task({task}: ITask) {
@@ -46,7 +46,7 @@ function Task({task}: ITask) {
 
             </Swipeable>
             {
-                visible ? <Description props={task}/> : null
+                visible ? <Description props={task} /> : null
             }
         </>
 

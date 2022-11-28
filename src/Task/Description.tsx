@@ -4,9 +4,9 @@ import { View, Text, TouchableOpacity, FlatList, SafeAreaView } from "react-nati
 import { stylesTask, darkMode, baseColor } from "../style";
 import { IDescriptionProps } from '../interfaces';
 import Comments from "./Comments";
-import { AppContext } from "../TodosApp/TodosApp";
 import Input from "./Input";
 import useAlert from "../hooks/alert.hook";
+import { AppContext } from "../../App";
 
 function Description({props}: IDescriptionProps) {
   const {dark, addComment } = useContext(AppContext)
@@ -45,11 +45,11 @@ function Description({props}: IDescriptionProps) {
     {
       showComments ?
       <SafeAreaView>
-        <Input function={addCommentToTodos}/>
+        <Input func={addCommentToTodos} />
         <FlatList
           data={props.comments}
           renderItem={({item}) => {
-          return <Comments comment={item} id={props.key}/>;
+          return <Comments comment={item} id={props.key} />;
           }}
           keyExtractor={item => item.id.toString()}
         /> 

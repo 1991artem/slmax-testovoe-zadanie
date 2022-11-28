@@ -33,6 +33,7 @@ const stylesApp = StyleSheet.create({
   textInputContainer: {
     flexDirection: 'column',
     borderColor: '#000000',
+    backgroundColor: '#FFFFFF',
     width: '95%', 
     height: '20%',
     minHeight: 100,

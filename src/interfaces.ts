@@ -27,6 +27,8 @@ export interface IContext {
   removeComment: (id: number, commentId: number) => void;
   removeAnswer: (id: number, commentId: number, answerCommentId: number | undefined) => void;
   dark: boolean;
+  subInputIsActive: boolean;
+  setSubInputIsActive: (value: boolean) => void;
 }
 
 export interface IDescriptionProps {
@@ -44,7 +46,7 @@ export interface ICommentProps {
 }
 
 export interface IInput {
-  function: (value: string) =>void;
+  func: (value: string) =>void;
 }
 
 export interface ITodosFilter {
@@ -65,5 +67,8 @@ export interface IFilter {
 
 export interface ITodosApp {
   dark: boolean;
-  filter: ITodosFilter;
+  todos: ITodo[];
+    setTheme: (value: boolean)=>void;
+  setFilter: (value: ITodosFilter)=>void;
+  setTodos: (value: ITodo[])=>void;
 }

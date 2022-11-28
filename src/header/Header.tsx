@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import React, { useContext, useState } from "react";
+import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import SwitchWithIcons from "react-native-switch-with-icons";
 import { IHeader } from "../interfaces";
@@ -16,8 +16,12 @@ function Header({setTheme, setFilter}: IHeader) {
     setDarkMode((prev) => !prev)
   };
 
+  const pressIconHandler = () => {
+    setShowFilter(prev => !prev)
+  }
+
   return (
-    <View style={stylesHeader.container}>
+    <SafeAreaView style={stylesHeader.container}>
       <Svg width="393" height="200" viewBox="0 0 393 200" fill="none">
         <Path
           d="M0 0H393V130.315C393 130.315 311.766 128.401 208.5 157.5C79.8313 193.758 0 191.887 0 191.887V0Z"
@@ -33,7 +37,7 @@ function Header({setTheme, setFilter}: IHeader) {
         />
       </Svg>
       <View style={stylesHeader.toolBar}>
-      <TouchableOpacity onPress={()=> setShowFilter(prev => !prev)}>
+      <TouchableOpacity onPress={pressIconHandler}>
         <MaterialIcons name="filter-list" size={24} color={darkMode ? "#7363D1" : "#10637D"} />
       </TouchableOpacity>
         <SwitchWithIcons 
@@ -56,7 +60,7 @@ function Header({setTheme, setFilter}: IHeader) {
       {
         showFilter ? <FilterInput dark={darkMode} setFilter={setFilter} setShowFilter={setShowFilter}/> : null
       }
-    </View>
+    </SafeAreaView>
   );
 }
 
